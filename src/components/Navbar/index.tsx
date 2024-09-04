@@ -1,18 +1,33 @@
+import { useSession, signIn, signOut } from 'next-auth/react';
 import styles from '@/components/Navbar/styles.module.css';
 import Link from 'next/link';
 
 export default function Navbar() {  
+
+    const { data: session, status} = useSession();
+
     return (
         <nav className={styles.navbar}>
             <div className={styles.logoDisplay}>
                 <Link href="/" className={styles.content}>
                     <h1 className={styles.logo}>Tarefas <span>+</span></h1>
                 </Link>
-                <Link href="/dashboard" className={styles.content}>
-                <button className={styles.painelButton}>Meu Painel</button>
-                </Link>
+               
+                {session?.user && (
+                    <Link href="/dashboard" className={styles.content}>
+                        <button className={styles.painelButton}>Meu Painel</button>
+                    </Link>
+                ) }
             </div>
-            <button className={styles.loginButton}>Minha Conta</button>
+            {status === "loading" ? (
+                <button className={styles.loginButton} onClick={ () => signIn("google") }>Fazer Login</button>
+            ) : ( session ? (
+                <button className={styles.loginButton} onClick={ () => signOut() }>Olá {session?.user?.name}</button>
+                ) : (
+                <button className={styles.loginButton} onClick={ () => signIn("google") }>Fazer Login</button>
+                )
+            )
+        }
         </nav>
     );
 }
