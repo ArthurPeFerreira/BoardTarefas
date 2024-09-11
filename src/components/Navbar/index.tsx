@@ -7,6 +7,7 @@ export default function Navbar() {
     const { data: session, status} = useSession();
 
     return (
+        <main className={styles.main}>
         <nav className={styles.navbar}>
             <div className={styles.logoDisplay}>
                 <Link href="/" className={styles.content}>
@@ -29,5 +30,6 @@ export default function Navbar() {
             )
         }
         </nav>
+        </main>
     );
 }

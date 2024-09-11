@@ -2,7 +2,7 @@ import styles from "@/pages/dashboard/styles.module.css"
 import { GetServerSideProps } from "next";
 import Head from "next/head"
 import { getSession } from "next-auth/react";
-import {  redirect } from "next/navigation";
+import Textarea from "@/components/Textarea";
 
 export default function Dashboard(){    
     return(
@@ -10,7 +10,23 @@ export default function Dashboard(){
             <Head>
                 <title>Tarefas+ | Dashboard</title>
             </Head>
-            <h1>Abasdada</h1>
+            
+            <main className={styles.conteiner}>
+                <section className={styles.content}>
+                    <div className={styles.contentForm}>
+                        <h1 className={styles.title}>Qual sua Tarefa?</h1>
+                        <form>
+                            <Textarea/>
+                            <div className={styles.checkboxarea}>
+                                <input type="checkbox" className={styles.checkbox}/>
+                                <label>Deixar tarefa publica?</label>   
+                            </div>
+                            <button type="submit" className={styles.button}>Registrar</button>
+                        </form>
+                    </div>
+                </section>
+            </main>
+            
         </div>
     );
 }
