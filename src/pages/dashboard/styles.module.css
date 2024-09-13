@@ -18,24 +18,123 @@
 
 .title{
     color: white;
+    margin-bottom: 8px;
 }
 
 .checkboxarea{
     color: white;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
 }
 
 .checkbox{
     margin-right: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 20px;
+    height: 20px;
 }
 
 .button{
-    padding: 5px;
+    padding: 12px 0;
+    border: 0;
     width: 100%;
-    background-color: blue;
-    border: 1px solid white;
+    color: #fff;
+    background-color: #3183ff;
     border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all .3s;
 }
 
 .button:hover{
+    background-color: #074197;
+    scale: 1.01;
+}
+
+.taskConteiner{
+    padding-top: 30px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.taskTitle{
+    font-size: 30px;
+    color: #0f0f0f;
+}
+
+.taskContent{
+    margin: 20px 0;
+    border: 1px solid #000;
+    border-radius: 10px;
+    max-width: 1024px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 10px;
+    align-items: center;
+}
+
+.infoContent{
+    display: flex;
+    flex-direction: column;
+}
+
+.publicContent{
+    margin-top: 10px;
+}
+
+.taskPublic{
+    padding: 5px;
+    background-color: #3183ff;
+    font-size: small;
+    color: #fff;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.taskInfo{
+    margin: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.taskDescripton{
+    box-sizing: content-box;
+}
+
+.shareButton{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.shareButton:hover{
+    scale: 1.2;
+}
+
+.trashButton{
+    padding: 0 15px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.trashIcon{
+    color: #f00;
+    transition: all .3s;
+}
+
+.trashIcon:hover{
+    color: rgb(216, 6, 6);
+    scale: 1.1;
+}
+
+@media  {
     
 }

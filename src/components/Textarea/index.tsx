@@ -1,6 +1,8 @@
+import { HTMLProps } from "react"
+import styles from "./styles.module.css"
 
-export default function Textarea(){
+export default function Textarea({ ...rest }:HTMLProps<HTMLTextAreaElement>){
     return(
-        <textarea></textarea>
+        <textarea className={styles.Textarea} {...rest}></textarea>
     )
 }
