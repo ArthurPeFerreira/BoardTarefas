@@ -105,6 +105,8 @@
 
 .taskDescripton{
     box-sizing: content-box;
+    line-height: 150%;
+    white-space: pre-wrap;
 }
 
 .shareButton{
@@ -133,8 +135,4 @@
 .trashIcon:hover{
     color: rgb(216, 6, 6);
     scale: 1.1;
-}
-
-@media  {
-    
 }
