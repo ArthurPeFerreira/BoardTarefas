@@ -107,6 +107,8 @@
     box-sizing: content-box;
     line-height: 150%;
     white-space: pre-wrap;
+    text-decoration: none; 
+    color: inherit;
 }
 
 .shareButton{

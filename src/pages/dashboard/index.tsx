@@ -7,8 +7,9 @@ import Textarea from "@/components/Textarea";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShare, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { db } from "@/services/firebaseconnection";
-import { addDoc, collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { db } from "@/services/firebaseConnection";
+import { doc, addDoc, collection, onSnapshot, orderBy, query, where, deleteDoc } from "firebase/firestore";
+import Link from "next/link";
 
 interface UserProps{
     user:{
@@ -23,56 +24,69 @@ interface TasksProps{
     isPublic: boolean,
     tarefa: string,
     user: string,
-    email: string
+    user_email: string
 }
 
 export default function Dashboard( {user}:UserProps ){    
     const [input, setInput] = useState("");
-    const [publickTask, setpublickTask] = useState(false);
+    const [publickTask, setpublicTask] = useState(false);
     const [tasks, setTasks] = useState<TasksProps[]>([]);
 
     useEffect(()=>{
         const loadTasks = async () => {
             const tarefasRef = collection(db, "Tarefas");
-
+            
             const q = query(
                 tarefasRef,
                 orderBy("created","desc"),
-                where("email","==", user.email)
+                where("user_email","==", user.email)
             )
             
             onSnapshot(q, (snapshot) => {
                 let lista = [] as TasksProps[];
-
-                snapshot.forEach( (doc)=> {
+            
+                snapshot.forEach((doc) => {            
                     lista.push({
                         id: doc.id,
                         created: doc.data().created,
                         isPublic: doc.data().isPublic,
                         tarefa: doc.data().tarefa,
                         user: doc.data().user,
-                        email: doc.data().email
-                    })
+                        user_email: doc.data().user_email
+                    });
                 });
-
                 setTasks(lista);
             });
         }
         
         loadTasks();
 
-        console.log(tasks)
-
     },[user.email]);
 
-    
+console.log(tasks);
 
     function handleInput( event:ChangeEvent<HTMLTextAreaElement> ){
         setInput(event.target.value);
     }
 
     function handlePublic( event:ChangeEvent<HTMLInputElement> ){
-        setpublickTask(event.target.checked);
+        setpublicTask(event.target.checked);
+    }
+
+    async function handleShare( id:string ){
+        await navigator.clipboard.writeText(
+            `${process.env.NEXT_PUBLIC_URL}/task/${id}`
+        );
+    }
+
+    async function handleDeleteTask( id:string ){
+        const taskDoc = doc(db, "Tarefas", id);
+        
+        try{
+            await deleteDoc(taskDoc);
+        }catch(e){
+            console.log(e);
+        }
     }
 
     async function handleRegister(event:FormEvent){
@@ -91,17 +105,12 @@ export default function Dashboard( {user}:UserProps ){
                 });
 
                 setInput('');
-                setpublickTask(false);
+                setpublicTask(false);
 
             }catch(e){
                 console.log(e);
             }
         }
-        
-
-    
-        
-            
     }
 
     return(
@@ -131,50 +140,58 @@ export default function Dashboard( {user}:UserProps ){
                     </div>
                 </section>
                 <section className={styles.taskConteiner}>
-                    <h1 className={styles.taskTitle}>Minhas Tarefas</h1>
-
-                    <div className={styles.taskContent}>
+                    {(tasks.length === 1) ? (<h1 className={styles.taskTitle}>Minhas Tarefas</h1>) : (<></>)}
+                    {(tasks.length === 0) ? (<p>Você não tem Tarefas Cadastradas!</p>) : (
+                    tasks.map((task) =>  
+                    <div key={task.id} className={styles.taskContent}>
                         <div className={styles.infoContent}>
+                            {(task.isPublic) ? (
+                            <>
                             <div className={styles.publicContent}>
                                 <label className={styles.taskPublic}>PUBLICO</label> 
-                                <button className={styles.shareButton}>
+                                <button className={styles.shareButton} onClick={() => handleShare(task.id)}>
                                     <FontAwesomeIcon icon={faShare} color="#3183ff" />
                                 </button> 
-                                
                             </div>
                             <div className={styles.taskInfo}>
-                                <p className={styles.taskDescripton}>Task digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitadaTask digitada</p>
+                                <Link className={styles.taskDescripton} href={`/task/${task.id}`}>
+                                    <p>{task.tarefa}</p>
+                                </Link>
                             </div>
+                            </>
+                            ):(
+                                <div className={styles.taskInfo}>
+                                    <p>{task.tarefa}</p>
+                                </div>
+                            )}
                         </div>
-                        <button className={styles.trashButton}>
-                            <FontAwesomeIcon icon={faTrash} size="xl" className={styles.trashIcon}/>
+                        <button className={styles.trashButton} onClick={() => handleDeleteTask(task.id)}>
+                            <FontAwesomeIcon icon={faTrash} size="xl" className={styles.trashIcon} />
                         </button>
-                        
-                    </div>
+                    </div>)
+                    )}
                 </section>
-
             </main>
         </div>
     );
 }
 
-export const getServerSideProps : GetServerSideProps = async ({ req }) => {
-   
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     const session = await getSession({ req });
 
-    if (!session?.user){
-        return{
-          redirect: {
-            destination: "/",
-            permanent: false
-          }  
+    if (!session?.user) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false
+            }
         };
     }
 
-    return{
+    return {
         props: {
-            user:{
-                nome: session?.user?.name,
+            user: {
+                nome: session?.user?.name,  // Corrigido aqui para `nome`
                 email: session?.user?.email
             }
         }

@@ -1,0 +1,131 @@
+/* Centraliza todo o conteúdo */
+.conteiner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Define o tamanho máximo e centraliza */
+.content {
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leve sombra */
+    padding: 10px;
+}
+
+/* Estilo do bloco da tarefa */
+.contentTask {
+    border: none; /* Remove a borda rígida */
+    border-radius: 10px;
+    padding: 20px; /* Aumenta o espaçamento interno */
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Leve sombra */
+}
+
+/* Nome do usuário com a tarefa */
+.taskUser {
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}
+
+/* Descrição da tarefa */
+.taskDescription {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+}
+
+/* Área para adicionar comentários */
+.contentComment {
+    max-width: 1024px;
+    margin-bottom: 30px;
+}
+
+/* Botão de enviar comentário */
+.button {
+    padding: 12px 0;
+    border: 0;
+    width: 100%;
+    color: #fff;
+    background-color: #3183ff;
+    border-radius: 8px; /* Bordas mais arredondadas */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.button:hover {
+    background-color: #074197;
+}
+
+/* Título das seções */
+.Tittle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Container dos comentários */
+.conteinerComment {
+    width: 100%;
+    border: none; /* Remove borda externa visível */
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Leve sombra */
+    box-sizing: border-box;
+}
+
+/* Informações sobre o comentário */
+.infoComment {
+    display: flex;
+    flex-direction: column;
+    max-width: 90%;
+}
+
+/* Nome do usuário no comentário */
+.commentUser {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+/* Descrição do comentário */
+.commentDescription {
+    font-size: 15px;
+    color: #555;
+}
+
+/* Botão de exclusão */
+.trashButton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.trashIcon {
+    color: #f00;
+    transition: color 0.3s ease;
+}
+
+.trashIcon:hover {
+    color: rgb(216, 6, 6);
+}
