@@ -30,12 +30,25 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Leve sombra */
 }
 
-/* Nome do usuário com a tarefa */
-.taskUser {
+.taskUserInfo{
     margin-bottom: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+/* Nome do usuário com a tarefa */
+.taskUser { 
     font-weight: bold;
     font-size: 18px;
     color: #333;
+}
+
+.taskDate{
+    font-size: 15px;
+    color: #333;
+    margin-left: 10px;
 }
 
 /* Descrição da tarefa */
@@ -68,6 +81,11 @@
 
 .button:hover {
     background-color: #074197;
+}
+
+.button:disabled{
+    cursor: not-allowed;
+    background-color: #3183ff9a;
 }
 
 /* Título das seções */
@@ -106,6 +124,8 @@
     font-size: 18px;
     margin-bottom: 5px;
 }
+
+
 
 /* Descrição do comentário */
 .commentDescription {
